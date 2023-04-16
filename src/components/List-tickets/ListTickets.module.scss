@@ -1,0 +1,12 @@
+@import "/src/color/color.scss";
+
+.list-tickets {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    margin: 0;
+    width: 100%;
+  }
+}

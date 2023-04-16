@@ -1,0 +1,20 @@
+@import "./src/color/color.scss";
+.footer-button {
+  display: flex;
+  padding: 15px 0;
+  background: $color-blue;
+  border-radius: 5px;
+  margin-top: 20px;
+  &__span {
+    display: flex;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: $color-white;
+    margin: 0 auto;
+  }
+}

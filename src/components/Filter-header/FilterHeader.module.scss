@@ -1,0 +1,41 @@
+@import "./src/color/color.scss";
+.filter {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto 20px auto;
+  width: 90%;
+  @media (min-width: 768px) {
+    width: 501px;
+  }
+  &__buttons {
+    display: flex;
+    width: 90%;
+    padding: 15px 22px;
+    background: $color-white;
+    border: 1px solid $color-button-border;
+    margin: 0;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 20px;
+    color: $color-black-tin;
+    @media (min-width: 768px) {
+      width: 168px;
+    }
+  }
+  &__buttons-active {
+    background: $color-blue;
+    color: $color-white
+  }
+  &__button-cheap {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  &__button-optimal {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: 40px;
+  }
+}

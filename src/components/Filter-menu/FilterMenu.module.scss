@@ -1,0 +1,47 @@
+@import "./src/color/color.scss";
+.antd-checkbox {
+  display: flex !important;
+  flex-direction: column !important;
+  background: $color-white;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  cursor: url("../../picture/Cursor.svg"), pointer;
+  @media (min-width: 768px) {
+    width: 232px;
+    height: 252px;
+    margin: 0 20px 0 auto;
+  }
+  &__checkbox {
+    margin-left: 20px;
+    cursor: url("../../picture/Cursor.svg"), pointer;
+  }
+  &__header {
+    display: flex;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 12px;
+    align-items: flex-end;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: $color-black-tin;
+    max-width: 192px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+  }
+}
+.antd-checkbox-group {
+  label {
+    margin: 0 !important;
+    padding: 5px 0;
+    cursor: url("../../picture/Cursor.svg"), pointer;
+  }
+  label:hover {
+    background: $color-light-blue;
+  }
+    input {
+      background: $color-white;
+      cursor: url("../../picture/Cursor.svg"), pointer;
+    }
+}
