@@ -1,6 +1,7 @@
 import {
   TICKETS,
   FILTER_MORE_TICKETS,
+  // eslint-disable-next-line camelcase
   SET_CHECKED_lIST,
   SET_CHECK_ALL,
   BUTTON_SALES,
@@ -12,22 +13,29 @@ import {
   STOP_INC,
   ERROR,
 } from './types'
+
 const ticket = (fn) => {
   try {
+    // eslint-disable-next-line consistent-return
     return async (dispatch) => {
       const res = await fn
       if (!res) {
+        // eslint-disable-next-line no-use-before-define
         dispatch(stopInc())
         return null
       }
       if (!res.stop) {
+        // eslint-disable-next-line no-use-before-define
         dispatch(stopInc())
       } else {
+        // eslint-disable-next-line no-use-before-define
         dispatch(loadingEnd())
+        // eslint-disable-next-line no-use-before-define
         dispatch(stopStatic())
       }
       dispatch({ type: TICKETS, arr: res })
     }
+    // eslint-disable-next-line no-unreachable
   } catch (err) {
     throw new Error(err)
   }
@@ -36,6 +44,7 @@ const ticket = (fn) => {
 const moreTickets = () => ({ type: FILTER_MORE_TICKETS })
 
 const setCheckedList = (payload) => ({
+  // eslint-disable-next-line camelcase
   type: SET_CHECKED_lIST,
   payload,
 })

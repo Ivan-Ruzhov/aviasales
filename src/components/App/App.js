@@ -7,6 +7,8 @@ import Logo from '../../picture/logo.svg'
 
 import classes from './App.module.scss'
 
+// eslint-disable-next-line no-unused-vars
+
 function App() {
   return (
     <div className={classes.app}>

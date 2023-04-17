@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCheckAll, setCheckedList } from '../actions/actions'
 
 import classes from './FilterMenu.module.scss'
+
 const CheckboxGroup = Checkbox.Group
 
 const plainOptions = ['Без пересадок', '1 пересадка', '2 пересадки', '3 пересадки']
 
-const FilterMenu = () => {
+function FilterMenu() {
   const dispatch = useDispatch()
   const filter = useSelector((state) => state.checkboxOptions)
   const onChange = (list) => {

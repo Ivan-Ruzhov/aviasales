@@ -1,5 +1,6 @@
 class ticketsServes {
   api_Base = 'https://aviasales-test-api.kata.academy/'
+
   id = localStorage.getItem('aviaId')
 
   async getId() {
@@ -19,9 +20,7 @@ class ticketsServes {
       if (res.status === 500) {
         throw new Error('500 Ошибка на сервере!')
       }
-      return await res.json().then((res) => {
-        return res
-      })
+      return await res.json().then((res) => res)
     } catch (err) {
       throw new Error(err.message)
     }

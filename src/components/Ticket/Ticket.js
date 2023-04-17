@@ -3,7 +3,7 @@ import { add, format } from 'date-fns'
 
 import classes from './Ticket.module.scss'
 
-const Ticket = ({ tic }) => {
+function Ticket({ tic }) {
   const oneTime = format(add(new Date(tic.segments[0].date), {}), 'KK-mm')
     .split('-')
     .join(':')
@@ -21,17 +21,16 @@ const Ticket = ({ tic }) => {
   const transfer = (arr) => {
     if (arr.length === 0) {
       return 'Нет пересадок'
-    } else if (arr.length === 1) {
-      return '1 пересадка'
-    } else if (arr.length === 2) {
-      return '2 пересадки'
-    } else {
-      return '3 пересадки'
     }
+    if (arr.length === 1) {
+      return '1 пересадка'
+    }
+    if (arr.length === 2) {
+      return '2 пересадки'
+    }
+    return '3 пересадки'
   }
-  const city = (arr) => {
-    return arr.join(' ')
-  }
+  const city = (arr) => arr.join(' ')
   const fixDate = (arr, arrTwo) => {
     const newArrayTwo = fixNumber(arrTwo)
     const newArray = arr.split(':')
@@ -45,10 +44,10 @@ const Ticket = ({ tic }) => {
       newHours += 1
     }
     if (newMinutes < 10) {
-      newMinutes = '0' + newMinutes.toString()
+      newMinutes = `0${newMinutes.toString()}`
     }
     if (newHours < 10) {
-      newHours = '0' + newHours
+      newHours = `0${newHours}`
     }
     return [newHours, newMinutes].join(':')
   }

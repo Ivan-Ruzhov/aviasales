@@ -14,6 +14,7 @@ export {
   TICKETS,
   FILTER_MORE_TICKETS,
   SET_CHECK_ALL,
+  // eslint-disable-next-line camelcase
   SET_CHECKED_lIST,
   BUTTON_SALES,
   BUTTON_FAST,
