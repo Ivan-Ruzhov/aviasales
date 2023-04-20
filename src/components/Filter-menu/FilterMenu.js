@@ -2,7 +2,7 @@ import React from 'react'
 import { Checkbox, ConfigProvider } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setCheckAll, setCheckedList } from '../actions/actions'
+import { setCheckAll, setCheckedList } from '../../actions/actions'
 
 import classes from './FilterMenu.module.scss'
 

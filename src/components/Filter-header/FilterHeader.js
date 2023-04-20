@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { onSale, onFast, onOptimal } from '../actions/actions'
+import { onSale, onFast, onOptimal } from '../../actions/actions'
 
 import classes from './FilterHeader.module.scss'
 
@@ -25,19 +25,17 @@ function FilterHeader() {
       e.target.classList.add(`${classes['filter__buttons-active']}`)
     }
   }
-  let id = 0
-  const buttonCreate = (arrName, arrFunc, arrClass, ids) =>
-    arrName.map((values) => (
-      // eslint-disable-next-line react/button-has-type
+  const buttonCreate = (arrName, arrFunc, arrClass) =>
+    arrName.map((values, index) => (
       <button
-        key={(ids += 1)}
-        className={`${classes.filter__buttons} ${classes[`${arrClass[id]}`]}`}
-        onClick={() => dispatch(arrFunc[id])}
+        key={index}
+        className={`${classes.filter__buttons} ${classes[`${arrClass[index]}`]}`}
+        onClick={() => dispatch(arrFunc[index])}
       >
         {values}
       </button>
     ))
-  const elements = buttonCreate(name, func, value, id)
+  const elements = buttonCreate(name, func, value)
   return (
     <div className={classes.filter} onClick={onClick}>
       {elements}

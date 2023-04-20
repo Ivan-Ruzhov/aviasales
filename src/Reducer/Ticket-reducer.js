@@ -5,9 +5,8 @@ import {
   BUTTON_SALES,
   LOADING_END,
   LOADING_BEGIN,
-  STOP_STATIC,
-  STOP_INC,
   ERROR,
+  ID,
 } from '../actions/types'
 
 const defaultState = {
@@ -16,23 +15,22 @@ const defaultState = {
   err: '',
   loading: '',
   end: '',
+  searchId: '',
 }
 const totalDuration = (data) => data.segments.reduce((acc, prev) => (acc += prev.duration), 0)
 
 const ticketReducer = (state = defaultState, action) => {
   const arr = state.tickets.slice(0)
   switch (action.type) {
-    case TICKETS:
-      console.log(action.arr.tickets)
-      // eslint-disable-next-line no-case-declarations
-      const ticket = action.arr.tickets.map((el) => ({
-        price: el.price,
-        logo: el.carrier,
-        segments: el.segments,
-      }))
+    case ID:
       return {
         ...state,
-        tickets: [...state.tickets.slice(0), ...ticket],
+        searchId: action.id,
+      }
+    case TICKETS:
+      return {
+        ...state,
+        tickets: [...action.arr.tickets, ...state.tickets.slice(0)],
         end: action.arr.stop,
       }
     case BUTTON_SALES:
@@ -67,13 +65,6 @@ const ticketReducer = (state = defaultState, action) => {
         ...state,
         loading: false,
       }
-    case STOP_INC:
-      return {
-        ...state,
-        stops: (state.stops += 1),
-      }
-    case STOP_STATIC:
-      return state
     case ERROR:
       return {
         ...state,

@@ -59,7 +59,7 @@ function Ticket({ tic }) {
         <span className={classes.ticket__price}>{tic.price} Р</span>
         <img
           className={classes.ticket__logo}
-          src={`https://pics.avs.io/99/36/${tic.logo}.png`}
+          src={`https://pics.avs.io/99/36/${tic.carrier}.png`}
           alt="Логотип Авиакомпании"
         />
       </header>

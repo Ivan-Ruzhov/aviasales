@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { moreTickets } from '../actions/actions'
+import { moreTickets } from '../../actions/actions'
 
 import classes from './FooterButton.module.scss'
 
