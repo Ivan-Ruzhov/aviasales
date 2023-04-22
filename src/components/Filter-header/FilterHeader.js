@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import classNames from 'classnames'
 
-import { onSale, onFast, onOptimal } from '../../actions/actions'
+import { onSale, onFast, onOptimal, buttonActive } from '../../actions/actions'
 
 import classes from './FilterHeader.module.scss'
 
@@ -12,35 +13,30 @@ function FilterHeader() {
     'filter__button-fast': 'Самый быстрый',
     'filter__Button-optimal': 'Оптимальный',
   })
-
   const name = Object.values(nameButton)
   const value = Object.keys(nameButton)
   const func = [onSale(), onFast(), onOptimal()]
-  const onClick = (e) => {
-    const list = e.currentTarget.querySelectorAll('button')
-    if (!e.target.classList.contains(`${classes['filter__buttons-active']}`)) {
-      for (let i = 0; i < list.length; i++) {
-        list[i].classList.remove(`${classes['filter__buttons-active']}`)
-      }
-      e.target.classList.add(`${classes['filter__buttons-active']}`)
-    }
-  }
-  const buttonCreate = (arrName, arrFunc, arrClass) =>
-    arrName.map((values, index) => (
-      <button
-        key={index}
-        className={`${classes.filter__buttons} ${classes[`${arrClass[index]}`]}`}
-        onClick={() => dispatch(arrFunc[index])}
-      >
-        {values}
-      </button>
-    ))
-  const elements = buttonCreate(name, func, value)
-  return (
-    <div className={classes.filter} onClick={onClick}>
-      {elements}
-    </div>
-  )
+  const filter = useSelector((state) => state.buttonActive)
+  const buttonCreate = (arrName, arrFunc, arrClass, arrActive) =>
+    arrName.map((values, index) => {
+      const buttonClass = classNames({
+        [`${classes['filter__buttons-active']}`]: arrClass[index] === arrActive.activeFilter,
+      })
+      return (
+        <button
+          key={index}
+          className={`${classes.filter__buttons} ${classes[`${arrClass[index]}`]} ${buttonClass}`}
+          onClick={() => {
+            dispatch(arrFunc[index])
+            dispatch(buttonActive(arrClass[index]))
+          }}
+        >
+          {values}
+        </button>
+      )
+    })
+  const elements = buttonCreate(name, func, value, filter)
+  return <div className={classes.filter}>{elements}</div>
 }
 
 export { FilterHeader }

@@ -1,6 +1,8 @@
+import { ticketsServes } from '../tickets-servise'
+
 import {
+  ID,
   TICKETS,
-  FILTER_MORE_TICKETS,
   SET_CHECKED_lIST,
   SET_CHECK_ALL,
   BUTTON_SALES,
@@ -9,24 +11,43 @@ import {
   LOADING_END,
   LOADING_BEGIN,
   ERROR,
-  ID,
+  NO_ERROR,
+  BUTTON,
 } from './types'
 
-const ticket = (fn, dispatch) => {
-  const getTickets = async () => {
-    await fn.then((res) => {
-      if (!res.stop) {
-        dispatch({ type: TICKETS, arr: res })
-        getTickets()
-      } else {
-        dispatch({ type: TICKETS, arr: res })
-        dispatch(loadingEnd())
-      }
+const tick = new ticketsServes()
+const id = (fn) => {
+  return async (dispatch) => {
+    return fn.then((res) => {
+      dispatch({ type: ID, id: res })
     })
   }
-  getTickets()
 }
-const moreTickets = () => ({ type: FILTER_MORE_TICKETS })
+const ticket = () => (dispatch) => {
+  dispatch(loadingBegin())
+  tick.getId().then((res) => {
+    dispatch({ type: ID, id: res })
+    dispatch(getTickets(res))
+  })
+}
+
+const getTickets = (payload) => (dispatch) => {
+  tick
+    .getTickets(payload)
+    .then((res) => {
+      dispatch({ type: TICKETS, arr: res })
+      if (!res.stop) {
+        dispatch(getTickets(payload))
+      } else {
+        dispatch(loadingEnd())
+        dispatch(noError())
+      }
+    })
+    .catch((err) => {
+      dispatch(error(err.toString()))
+      dispatch(getTickets(payload))
+    })
+}
 
 const setCheckedList = (payload) => ({
   type: SET_CHECKED_lIST,
@@ -50,13 +71,13 @@ const loadingBegin = () => ({ type: LOADING_BEGIN })
 
 const loadingEnd = () => ({ type: LOADING_END })
 
-const error = () => ({ type: ERROR })
+const error = (payload) => ({ type: ERROR, payload })
 
-const id = (fn) => {
-  return async (dispatch) => {
-    const res = await fn
-    dispatch({ type: ID, id: res })
-  }
-}
+const noError = () => ({ type: NO_ERROR })
 
-export { ticket, moreTickets, setCheckAll, setCheckedList, onSale, onFast, onOptimal, loadingBegin, error, id }
+const buttonActive = (buttonName) => ({
+  type: BUTTON,
+  payload: buttonName,
+})
+
+export { id, ticket, setCheckAll, setCheckedList, onSale, onFast, onOptimal, loadingBegin, error, buttonActive }

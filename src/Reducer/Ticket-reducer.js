@@ -7,6 +7,7 @@ import {
   LOADING_BEGIN,
   ERROR,
   ID,
+  NO_ERROR,
 } from '../actions/types'
 
 const defaultState = {
@@ -69,6 +70,11 @@ const ticketReducer = (state = defaultState, action) => {
       return {
         ...state,
         err: action.payload,
+      }
+    case NO_ERROR:
+      return {
+        ...state,
+        err: '',
       }
     default:
       return state
