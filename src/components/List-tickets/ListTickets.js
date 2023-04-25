@@ -1,6 +1,6 @@
 import { Alert, Spin } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { Ticket } from '../Ticket'
 import { FooterButton } from '../Footer-button'
@@ -9,6 +9,7 @@ import { ticket } from '../../actions/actions'
 import classes from './ListTickets.module.scss'
 
 function ListTickets() {
+  console.log('render')
   const [count, setCount] = useState(5)
   const more = () => {
     setCount(count + 5)
@@ -41,15 +42,15 @@ function ListTickets() {
   }, [])
   const spinner = loading ? <Spin /> : null
   const filter = useSelector((state) => state.checkboxOptions.checkedList)
-  const ticketList = filterOfStops(tickets, filter)
+  const ticketList = useMemo(() => filterOfStops(tickets, filter).slice(0, count), [tickets, count])
   return (
     <>
       {err ? <Alert type="error" message={err} /> : null}
       {spinner}
       {ticketList.length ? (
         <ul className={classes['list-tickets']}>
-          {ticketList.slice(0, count).map((el) => (
-            <Ticket key={(el.price + el.segments[0].duration) * Math.random()} tic={el} />
+          {ticketList.map((el) => (
+            <Ticket key={el.price + el.segments[0].duration + el.segments[1].duration} tic={el} />
           ))}
           {ticketList.length ? <FooterButton more={more} /> : null}
         </ul>

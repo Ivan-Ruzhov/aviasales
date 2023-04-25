@@ -25,10 +25,17 @@ const id = (fn) => {
 }
 const ticket = () => (dispatch) => {
   dispatch(loadingBegin())
-  tick.getId().then((res) => {
-    dispatch({ type: ID, id: res })
-    dispatch(getTickets(res))
-  })
+  tick
+    .getId()
+    .then((res) => {
+      dispatch({ type: ID, id: res })
+      dispatch(getTickets(res))
+    })
+    .catch((err) => {
+      dispatch(error(err.toString()))
+      dispatch(loadingEnd())
+      return null
+    })
 }
 
 const getTickets = (payload) => (dispatch) => {
@@ -44,6 +51,11 @@ const getTickets = (payload) => (dispatch) => {
       }
     })
     .catch((err) => {
+      if (err.message === 'Failed to fetch') {
+        dispatch(error('Нет сети, проверьте подключение в интернету'))
+        dispatch(loadingEnd())
+        return null
+      }
       dispatch(error(err.toString()))
       dispatch(getTickets(payload))
     })

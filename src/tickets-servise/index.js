@@ -4,6 +4,7 @@ class ticketsServes {
     const params = new URL('search', this.api_Base)
     const res = await fetch(params)
     if (!res.ok) {
+      console.log('id failed')
       throw new Error(`Ошибка ${res.status}, не переживайте, мы все исправим!`)
     }
     const result = await res.json()
@@ -15,7 +16,10 @@ class ticketsServes {
     params.searchParams.set('searchId', id)
     const res = await fetch(params)
     if (!res.ok) {
-      throw new Error(`Ошибка ${res.status}, не переживайте, мы все исправим!`)
+      if (res.status === 500) {
+        throw new Error(`Ошибка ${res.status}, не переживайте, мы все исправим!`)
+      }
+      throw new Error()
     }
     return await res.json()
   }
